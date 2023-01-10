@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Insert page</h1>
+    <!-- method="post" non si riferisce alla HTTP post, dice di non rinviare i parametri nell'URL -->
+    <!-- metodo di default è get, i dati vengono inviati in query string -->
+    <form action="reception.html" method="post" target="_blank">
+        <label for="Nome">Nome:</label>
+        <!-- "name" permette di assegnare una chiave (Nome) a un valore, la coppia viene usata come parametro (..?Nome=Tony) -->
+        <input type="text" placeholder="Nome" name="Nome">
+        <br>
+        <label for="Cognome">Cognome:</label>
+        <input type="text" placeholder="Cognome" name="Cognome">
+        <br>
+        <label for="DataNascita">Data di nascita:</label>
+        <input type="date" name="DataNascita">
+        <br>
+        <label for="">Sesso:</label>
+        <!-- I radio devono avere lo stesso "name" per essere mutualmente esclusivi -->
+        <!-- Per specificare il parametro passato da un radio usare "value" -->
+        <!-- "for" in questo caso permette di riferirsi a un input identificato da "id" e venire considerata come input quando viene cliccata -->
+        <label for="Maschio">M</label>
+        <input type="radio" id="Maschio" name="Sesso" value="M">
+        <label for="Femmina">F</label>
+        <input type="radio" id="Femmina" name="Sesso" value="F">
+        <br>
+        <label for="">Città visitate:</label><br>
+        <label for="Firenze">Firenze</label>
+        <input type="checkbox" id="Firenze" name="City" value="Firenze">
+        <label for="Roma">Roma</label>
+        <input type="checkbox" id="Roma" name="City" value="Roma">
+        <label for="Palermo">Palermo</label>
+        <input type="checkbox" id="Palermo" name="City" value="Palermo">
+        <br>
+        <label for="">Istruzione:</label><br>
+        <select name="Istruzione" id="">
+            <option value="Elementare">Elementare</option>
+            <option value="Media">Media</option>
+            <option value="Superiore">Superiore</option>
+            <option value="Laurea">Laurea</option>
+        </select>
+        <br>
+        <label for="">Seleziona il CV:</label>
+        <input type="file" name="CV">
+        <br>
+        <label for="">Username:</label>
+        <input type="text" name="Username">
+        <br>
+        <label for="">Password:</label>
+        <input type="password" name="Password">
+        <!-- Redirect alla pagina segnata in "action" del tag form -->
+        <br><br><input type="submit" value="Send request">
+        <button type="submit">Send Request</button>
+        <!-- Button con type submit è uguale -->
+    </form>
+
+</body>
+
+</html>

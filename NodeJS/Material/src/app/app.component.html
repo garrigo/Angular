@@ -1,0 +1,9 @@
+<div class="container">
+  <label for="">Valore dell'indice: {{indice}}</label>
+  <!-- <mat-slider min="0" max="100" step="1" [(ngModel)]="indice">
+  
+  </mat-slider> -->
+  <mat-slider min="0" max="100" step="1">
+    <input [(ngModel)]="indice" matSliderThumb>
+  </mat-slider>
+</div>

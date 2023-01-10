@@ -1,0 +1,13 @@
+
+<td>{{fattura.numero}}</td>
+<td>{{fattura.data}}</td>
+<td>{{fattura.city}}</td>
+<td>{{fattura.prodotti | saldo}}</td>
+<td><button (click)="vedi()">{{visualizza ? "Nascondi" : "Visualizza"}} dettagli</button></td>
+<td>
+    <table>
+        <tr *ngFor="let prod of fattura.prodotti">
+            <app-prodotto *ngIf="visualizza" [prodotto]="prod"></app-prodotto>
+        </tr>
+    </table>
+</td>

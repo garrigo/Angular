@@ -1,0 +1,15 @@
+<div style="background-color: whitesmoke;">
+    <h1>Lista di fatture emesse</h1>
+    <table border="2">
+        <tr *ngFor="let fattura of fatture">
+            <app-dettaglio [fattura]="fattura"></app-dettaglio>
+        </tr>
+    </table>
+    <label for="">Inserisci costo minimo: </label>
+    <input (input)="filtra()" type="number" [(ngModel)]="minimo">
+    <table border="2">
+        <tr *ngFor="let fattura of filtrati">
+            <app-dettaglio [fattura]="fattura"></app-dettaglio>
+        </tr>
+    </table>
+</div>

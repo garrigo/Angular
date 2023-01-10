@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script>
+    let auto = {
+        marca: "Fiat",
+        modello: "Punto",
+        cc : 1100,
+        descrizione: function() {
+            return `Marca: ${this.marca} \nModello: ${this.modello} \nCC: ${this.cc}`;
+        }
+    }
+    console.log(auto.descrizione());
+
+    //Pseudo classe
+    function Treno(partenza, arrivo, km){
+        this.partenza = partenza;
+        this.arrivo = arrivo;
+        this.km = km;
+        this.descrizione = function() {
+            return `Partenza: ${this.partenza} \nArrivo: ${this.arrivo} \nKM: ${this.km}`;
+        }
+    }
+    let RM_PD = new Treno('Roma', 'Padova', 500);
+    let PD_MI = new Treno('Padova', 'Milano', 300);
+    console.log(RM_PD.descrizione());
+    console.log(PD_MI.descrizione());
+    console.log(RM_PD instanceof Treno);
+
+    Treno.prototype.carrozze = 10;
+    RM_PD.carrozze = 14;
+    console.log(RM_PD.carrozze);
+    console.log(PD_MI.carrozze);
+    //Classe
+    class Appartamento{
+        constructor(indirizzo, mq, city){
+            this.indirizzo = indirizzo;
+            this.mq = mq;
+            this.city = city;
+        }
+        descrizione(){
+            return `Indirizzo: ${this.indirizzo} \nMQ: ${this.mq} \nCittà: ${this.city}`;
+        }
+    }
+
+    class Villa extends Appartamento{
+        constructor(citta, mq, indirizzo, trattativa){
+            super(indirizzo, mq, citta)
+            this.trattativa = trattativa
+        }
+    }
+
+    let flegrei = new Appartamento("Via dei Campi Flegrei, 35", 60, "Roma");
+    console.log(flegrei.descrizione());
+
+
+</script>
+</html>
+

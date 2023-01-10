@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script>
+    // DESTRUTTURAZIONE
+    let persona = {
+        nome: "Francesco",
+        cognome: "CognomeDiTotti",
+        anni : 20
+    }
+    let {nome, cognome, anni} = persona;
+    console.log(nome);
+    console.log(cognome);
+    console.log(anni);
+    let cities = ["Roma", "Firenze", "Venezia", "Padova", "Treviso"];
+    let [lazio, toscana, ...veneto] = cities;
+    console.log(lazio);
+    console.log(toscana);
+    console.log(veneto);
+    let cit = [...cities, "Teramo"];
+    console.log(cit)
+</script>
+</html>
+

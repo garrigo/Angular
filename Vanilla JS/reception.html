@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Reception page</h1>
+    <p id="p1" style="background-color: aqua">Paragrafo 1</p>
+    <p id="p2" style="background-color: yellow">Paragrafo 2</p>
+    <p id="p3" style="background-color: green">Paragrafo 3</p>
+    <div id="cities">
+        <label for="">Venezia</label><input name="city" value="Venezia" type="checkbox">
+        <label for="">Firenze</label><input name="city" value="Firenze" type="checkbox">
+        <label for="">Roma</label><input name="city" value="Roma" type="checkbox">
+        <label for="">Palermo</label><input name="city" value="Palermo" type="checkbox">
+    </div>
+
+</body>
+<div id ="mydiv">Testo</div>
+<script>
+    // if (20 == `20`)
+    //     alert('Uguale');
+    // else
+    //     alert('Diverso')
+    // if (20 === `20`)
+    //     alert('Uguale')
+    // else
+    //     alert('Diverso')
+    // uguale a window.alert
+    function ChangeP(p, color) {
+        p.style.backgroundColor = color;
+    }
+    document.getElementById("p1").addEventListener("mouseover", function (){
+        this.style.backgroundColor = "red";
+    }, false);
+    document.getElementById("p1").addEventListener("mouseout", function (){
+        this.style.backgroundColor = "aqua";
+    }, false);
+    document.getElementById("p2").addEventListener("mouseover", function (){
+        ChangeP(this, "purple");
+    });
+    document.getElementById("p2").onmouseout = function (){ChangeP(this, "yellow")}
+    document.getElementById("p3").onmouseover = function (){ChangeP(this, "orange")}
+    document.getElementById("p3").onmouseout = function (){ChangeP(this, "green")}
+
+    var gatto = ['a', 'b']
+    gatto[3] = 'd'
+    // posizione [2] sarà undefined
+    for (cat of gatto) {
+        // console.log(cat);
+    }
+    var json = {
+        nome: "Kuma",
+        specie: "Gatto",
+        anni: 3
+    }
+    // per scorrere i parametri di un oggetto json si deve usare la posizione (ergo for x "in" json_object)
+    for (pos in json) {
+        // console.log(json[pos]);
+    }
+    gatto.push(...['e', 'f', 'g'])
+    // console.log(cat);
+
+    var anagrafica = ["Cane", "Gatto", "Topo"];
+
+    //map ritorna un nuovo array partendo da un altro su cui si applica una funzione per ogni elemento
+    var map = anagrafica.map(
+        (item) => {
+            return item.toUpperCase();
+        }
+    );
+    console.log(map)
+
+    //filtra un array, non servono graffe ma solo un filtro
+    var filter = anagrafica.filter(
+        (item) => item.length === 4
+    );
+    console.log(filter)
+    var elem = document.createElement("p");
+    elem.innerText = "APPENDED";
+    elem.style.backgroundColor = "black";
+    elem.style.color = "white";
+    document.body.appendChild(elem);
+    document.getElementById("mydiv").innerHTML("<div>TOAST</div>");
+
+    function cities(){
+        let _cities = document.getElementsByName("city");
+        let visited;
+        for (let city in _cities){
+            console.log(city);
+            if (city.checked)
+                visited.push(city.value);
+        }
+        console.log(visited)
+    }
+    for(city of document.getElementsByName("city"))
+        city.addEventListener("change", function(){
+            
+            cities();
+        });
+</script>
+
+</html>

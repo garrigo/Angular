@@ -1,0 +1,24 @@
+<div class="container">
+  <h1>Reactive forms</h1>
+  <form action="" [formGroup]="contattoForm" (submit)="registra()">
+    <div class="form-group">
+      <label for="">Inserisci il tuo nome</label>
+      <input class="form-control" type="text" formControlName="nome">
+      <label  for="" *ngIf="contattoForm.controls['nome'].invalid" [ngClass]="'error'" style="color:red">Campo obbligatorio.</label>
+    </div>
+    <div class="form-group">
+      <label for="">Inserisci il tuo cognome</label>
+      <input class="form-control" type="text" formControlName="cognome">
+      <label for="" *ngIf="contattoForm.controls['cognome'].invalid" [ngClass]="'error'" style="color:red">Il cognome non può avere meno di 2 caratteri.</label>
+    </div>
+    <div class="form-group">
+      <label for="">Inserisci i tuoi anni</label>
+      <input class="form-control" type="number" formControlName="anni">
+      <label for="" *ngIf="contattoForm.controls['anni'].invalid" [ngClass]="'error'" style="color:red">E' necessario essere maggiorenne.</label>
+    </div>
+    <div class="form-group">
+      <button [disabled]="contattoForm.invalid" type="submit">Registra nuovo utente</button>
+    </div>
+    
+  </form>
+</div>

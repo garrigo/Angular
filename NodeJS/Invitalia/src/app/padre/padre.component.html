@@ -1,0 +1,12 @@
+<div style="background-color: greenyellow;">
+    <h1>Inizio componente padre</h1>
+    <br><br>
+    <label for="">Inserisci il tuo nome</label>
+    <input type="text" [(ngModel)]="nome"><br><br>
+    <!-- Innesta variabile al figlio (tramite Input) -->
+    <!-- Innesta "subscribe" al figlio, $event dice che è il figlio a dover gestire l'argomento -->
+    <app-figlio [nomeRicevuto]="nome" (evento)="ricevi($event)"></app-figlio>
+    <br>
+    <span>Dal figlio ho ricevuto: {{cityReceived}}</span>
+    <h1>Fine componente padre</h1>
+</div>

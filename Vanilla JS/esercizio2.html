@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canile</title>
+</head>
+<style>
+    #ListaCani,
+    #ListaCani th,
+    #ListaCani td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<body>
+    <h1>Canile</h1>
+    <table width="60%" id="Tabella">
+        <tr>
+            <td><label for="NomeCane">Nome cane:</label>
+                <input type="text" id="Nome" name="Nome">
+            </td>
+            <td><label for="Razza">Razza:</label>
+                <select name="Razza" id="Razza">
+                </select>
+            </td>
+            <td><label for="Box">Box:</label>
+                <select name="Box" id="Box">
+                </select>
+            </td>
+            <td><button id="Aggiungi" type="submit">Aggiungi</button></td>
+        </tr>
+        <tr>
+            <td><label for="NomeCane">Filtro per nome cane:</label>
+                <select name="Nome" id="NomeFiltro">
+                </select><button id="Filtro2" type="submit">Filtra</button>
+            </td>
+
+            <td>
+                <label for="Razza">Filtro per razza:</label>
+                <select name="Razza" id="RazzaFiltro">
+                </select>
+                <button id="Filtro1" type="submit">Filtra</button>
+            </td>
+
+            <td><label for="BoxCane">Filtro per box:</label>
+                <select name="Nome" id="BoxFiltro">
+                </select><button id="Filtro3" type="submit">Filtra</button>
+            </td>
+        </tr>
+        <tr>
+        </tr>
+    </table><br>
+    <table width="50%" id="ListaCani">
+    </table>
+
+</body>
+<script>
+    // Dati ricevuti dal server
+    var boxes = [0, 0, 0, 0]
+    var cani = []
+    var razze = [
+        {
+            "Nome": "Barboncino",
+            "Aggressività": 5
+        },
+        {
+            "Nome": "Alano",
+            "Aggressività": 2
+        },
+        {
+            "Nome": "Bassotto",
+            "Aggressività": 7
+        },
+        {
+            "Nome": "Pinscher",
+            "Aggressività": 4
+        },
+    ]
+
+
+    for (let i = 1; i <= boxes.length; i++) {
+        let elem = document.createElement("option");
+        elem.innerText = i;
+        elem.value = i;
+        let elem2 = elem.cloneNode(true);
+        document.getElementById("Box").appendChild(elem);
+        document.getElementById("BoxFiltro").appendChild(elem2);
+    }
+
+    for (razza of razze) {
+        let elem = document.createElement("option");
+        elem.innerText = razza["Nome"];
+        elem.value = razza["Nome"],
+        elem.id = razza["Nome"],
+        elem.setAttribute("aggr", razza["Aggressività"]),
+        document.getElementById("Razza").appendChild(elem);
+        let elem2 = elem.cloneNode(true);
+        document.getElementById("RazzaFiltro").appendChild(elem2);
+    }
+
+    function FiltraNome(cane, nome) {
+        return cane["Nome"] == nome;
+    }
+
+    function FiltraRazza(cane, razza) {
+        return cane["Razza"] == razza;
+    }
+    function FiltraBox(cane, box) {
+        return cane["Box"] == box;
+    }
+
+    function Filtra(filtro, val) {
+        let ListaCani = document.getElementById("ListaCani");
+        ListaCani.innerHTML =
+            `<td><label for="">Nome</label><br></td>
+        <td><label for="">Razza</label><br></td>
+        <td><label for="">Aggressività</label><br></td>
+        <td><label for="">Box</label><br></td>` ;
+        for (cane of cani) {
+            if (filtro(cane, val)) {
+                let tr = document.createElement("tr");
+                tr.appendChild(generaColonna(cane["Nome"]));
+                tr.appendChild(generaColonna(cane["Razza"]));
+                tr.appendChild(generaColonna(cane["Aggressività"]));
+                tr.appendChild(generaColonna(cane["Box"]));
+                ListaCani.appendChild(tr);
+            }
+        }
+    }
+
+    function generaColonna(val){
+        let td = document.createElement("td");
+        td.innerText = val;
+        return td;
+    }
+
+    document.getElementById("Filtro1").addEventListener("click", function () {
+        let razza = document.getElementById("RazzaFiltro").value;
+        Filtra(FiltraRazza, razza);
+    }, false);
+
+    document.getElementById("Filtro2").addEventListener("click", function () {
+        let nome = document.getElementById("NomeFiltro").value;
+        Filtra(FiltraNome, nome);
+    }, false);
+
+    document.getElementById("Filtro3").addEventListener("click", function () {
+        let box = document.getElementById("BoxFiltro").value;
+        Filtra(FiltraBox, box);
+    }, false);
+
+    document.getElementById("Aggiungi").addEventListener("click", function () {
+        let box = parseInt(document.getElementById("Box").value);
+        var nomeRazza = document.getElementById("Razza").value;
+        if (boxes[box - 1] < 2) {
+
+            var cane = {
+                "Nome": document.getElementById("Nome").value,
+                "Razza": nomeRazza,
+                "Aggressività": document.getElementById(nomeRazza).getAttribute("aggr"),
+                "Box": box
+            }
+            cani.push(cane);
+            boxes[box - 1]++;
+            if (document.getElementById(cane.Nome) === null) {
+                let elem = document.createElement("option");
+                elem.innerText = cane.Nome;
+                elem.value = cane.Nome;
+                elem.id = cane.Nome;
+                document.getElementById("NomeFiltro").appendChild(elem);
+            }
+        }
+        else
+            alert("Il box è pieno");
+    });
+</script>
+
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biglietteria</title>
+</head>
+<style>
+    #ListaBiglietti,
+    #ListaBiglietti th,
+    #ListaBiglietti td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<body>
+    <table width="100%">
+        <tr>
+            <td> <label for="">Stazione di partenza:</label>
+                <select name="Partenza" id="Partenza"></select>
+            </td>
+            <td><label for="">Stazione di arrivo:</label>
+                <select name="Arrivo" id="Arrivo"></select>
+            </td>
+        </tr>
+        <tr>
+            <td> <label for="">Classe:</label>
+                <label for="Classe1">1° Classe</label>
+                <input type="radio" id="Classe1" name="classe">
+                <label for="Classe2">2° Classe</label>
+                <input type="radio" id="Classe2" name="classe">
+            </td>
+            <td> <label for="">Numero passeggeri:</label>
+                <input type="number" id="NumeroPass" name="NumeroPass">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="width:30%;float:left">
+                    <label for="">Tipologia pagamento:</label>
+                </div>
+                <div style="width:70%;float:right">
+                    <label for="Bancomat">Bancomat</label>
+                    <input type="checkbox" id="Bancomat" name="TipoPagamento" value="Bancomat"><br>
+                    <label for="Contanti">Contanti</label>
+                    <input type="checkbox" id="Contanti" name="TipoPagamento" value="Contanti"><br>
+                    <label for="Bitcoin">Bitcoin</label>
+                    <input type="checkbox" id="Bitcoin" name="TipoPagamento" value="Bitcoin"><br>
+                </div>
+            </td>
+            <td><button id="Acquista" type="submit">Acquista biglietto</button></td>
+            </td>
+
+        </tr>
+        <tr>
+            <td><button id="Tutti" type="submit">Visualizza tutti i biglietti</button></td>
+            <td>
+                <p id="Media"></p>
+            </td>
+        </tr>
+    </table>
+    <table width="40%">
+        <tr>
+            <td>
+                <label for="">Filtra per partenza:</label>
+                <select name="FiltroPartenza" id="FiltroPartenza"></select>
+            </td>
+            <td>
+                <button id="ApplicaFiltroPartenza" type="submit">Applica filtro partenza</button>
+            </td>
+        </tr>
+        <tr>
+            <td> <label for="">Filtra per classe:</label>
+                <select name="FiltroClasse" id="FiltroClasse">
+                    <option value="1">1° Classe</option>
+                    <option value="2">2° Classe</option>
+                </select>
+            </td>
+            <td>
+                <button id="ApplicaFiltroClasse" type="submit">Applica filtro classe</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="">Filtra per costo minimo:</label>
+                <input type="number" name="FiltroCosto" id="FiltroCosto"></select>
+            </td>
+            <td>
+                <button id="ApplicaFiltroCosto" type="submit">Applica filtro importo</button><br>
+            </td>
+        </tr>
+    </table>
+    <table width="100%" id="ListaBiglietti">
+    </table>
+</body>
+<script>
+    // Dati ricevuti dal server
+    const prezzo_1classe = 90;
+    const prezzo_2classe = 0;
+    var biglietti = [];
+    var aeroporti = [
+        {
+            "Nome": "Genova",
+            "Prezzo": 160
+        },
+        {
+            "Nome": "Teramo",
+            "Prezzo": 110
+        },
+        {
+            "Nome": "Catania",
+            "Prezzo": 345
+        },
+    ]
+    var prezzo = 0;
+
+    // Aggiungi lista aereoporti a <select> passando il suo id
+    function AggiungiStazioni(selectId) {
+        for (aer of aeroporti) {
+            let elem = document.createElement("option");
+            elem.innerText = aer["Nome"];
+            elem.value = aer["Nome"] + "," + aer["Prezzo"];
+            elem.className = aer["Nome"];
+            document.getElementById(selectId).appendChild(elem);
+        }
+    }
+
+    function AggiornaDestinazioni() {
+        document.getElementById("Arrivo").innerHTML = "";
+        AggiungiStazioni("Arrivo");
+        let selected = document.getElementById("Partenza").value.split(',')[0];
+        document.getElementById("Arrivo").removeChild(document.getElementsByClassName(selected)[1]);
+    }
+
+    function NoFilter(biglietto, partenza) {
+        return true;
+    }
+
+    function FiltraPartenza(biglietto, partenza) {
+        return biglietto["Partenza"] == partenza;
+    }
+
+    function FiltraClasse(biglietto, classe) {
+        return biglietto["Classe"] == classe;
+    }
+    function FiltraCosto(biglietto, costoMin) {
+
+        return biglietto["Prezzo"] >= costoMin;
+    }
+
+    function ListaBiglietti(filtro, val) {
+        let listaBiglietti = document.getElementById("ListaBiglietti");
+        listaBiglietti.innerHTML =
+            `<td><label for="">Partenza</label><br></td>
+        <td><label for="">Arrivo</label><br></td>
+        <td><label for="">Classe</label><br></td>
+        <td><label for="">Passeggeri</label><br></td>
+        <td><label for="">Costo Biglietto</label><br></td>
+        <td><label for="">Pagamento</label><br></td>` ;
+        for (b of biglietti) {
+            if (filtro(b, val)) {
+                let tr = document.createElement("tr");
+                tr.appendChild(generaColonna(b["Partenza"]));
+                tr.appendChild(generaColonna(b["Arrivo"]));
+                tr.appendChild(generaColonna(b["Classe"]));
+                tr.appendChild(generaColonna(b["Passeggeri"]));
+                tr.appendChild(generaColonna(b["Prezzo"]));
+                tr.appendChild(generaColonna(b["Pagamento"]));
+                listaBiglietti.appendChild(tr);
+            }
+        }
+    }
+
+    function CalcolaMedia() {
+        let q = 0;
+        let somma = 0;
+        for (b of biglietti) {
+            somma += b["Prezzo"];
+            q++;
+        }
+        return (q != 0 ? somma / q : 0);
+    }
+
+    function generaColonna(val) {
+        let td = document.createElement("td");
+        td.innerText = val;
+        return td;
+    }
+
+    document.getElementById("Classe1").setAttribute("value", prezzo_1classe)
+    document.getElementById("Classe2").setAttribute("value", prezzo_2classe)
+
+    document.getElementById("Partenza").addEventListener("change", function () {
+        AggiornaDestinazioni();
+    });
+
+    document.getElementById("Acquista").addEventListener("click", function () {
+        let partenza = document.getElementById("Partenza").value.split(',');
+        let arrivo = document.getElementById("Arrivo").value.split(',')[0];
+        let classe1Checked = (document.getElementById('Classe1').checked)
+        let classe = classe1Checked ?
+            document.getElementById('Classe1') :
+            document.getElementById('Classe2');
+        let passeggeri = document.getElementById("NumeroPass").value;
+        let pagamenti = []
+        for (pag of document.getElementsByName("TipoPagamento")) {
+            if (pag.checked)
+                pagamenti.push(pag.value);
+        }
+        let biglietto = {
+            "Partenza": partenza[0],
+            "Arrivo": arrivo,
+            "Classe": classe1Checked ? "1" : "2",
+            "Passeggeri": passeggeri,
+            "Prezzo": partenza[1] * passeggeri + parseInt(classe.value),
+            "Pagamento": pagamenti
+        }
+        biglietti.push(biglietto);
+        document.getElementById("Media").innerText = "La media dei biglietti acquistati è: " + CalcolaMedia();
+    });
+
+    document.getElementById("Tutti").addEventListener("click", function () {
+        ListaBiglietti(NoFilter, 0)
+    });
+    document.getElementById("ApplicaFiltroPartenza").addEventListener("click", function () {
+        ListaBiglietti(FiltraPartenza, document.getElementById("FiltroPartenza").value.split(',')[0])
+    });
+    document.getElementById("ApplicaFiltroClasse").addEventListener("click", function () {
+        ListaBiglietti(FiltraClasse, document.getElementById("FiltroClasse").value)
+    });
+    document.getElementById("ApplicaFiltroCosto").addEventListener("click", function () {
+        ListaBiglietti(FiltraCosto, document.getElementById("FiltroCosto").value)
+    });
+
+
+    AggiungiStazioni("Partenza");
+    AggiungiStazioni("FiltroPartenza");
+    AggiornaDestinazioni();
+
+</script>
+
+</html>

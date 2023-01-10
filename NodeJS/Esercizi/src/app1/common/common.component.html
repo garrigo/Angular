@@ -1,0 +1,20 @@
+<div >
+    <table [style.background-color]="colore" border="2">
+        <tr>
+            <td>Area {{ruolo}}</td>
+            <td>
+                <label for="">Importo da prelevare</label>
+                <input type="number" [(ngModel)]="prelievo">
+            </td>
+            <td><button (click)="preleva()">Conferma</button></td>
+        </tr>
+        <tr *ngIf="ruolo == 'CEO'">
+            <td></td>
+            <td>
+                <label for="">Importo da depositare</label>
+                <input type="number" [(ngModel)]="deposito">
+            </td>
+            <td><button (click)="deposita()">Conferma</button></td>
+        </tr>
+    </table>
+</div>  

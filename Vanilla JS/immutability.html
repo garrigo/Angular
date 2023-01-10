@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script>
+    // IMMUTABILITA'
+    let francesco = {
+        nome: "Francesco",
+        cognome: "CognomeDiTotti",
+        anni : 20
+    }
+    // NON è una nuova istanza, è un riferimento
+    let carlo = francesco;
+    carlo.anni = 40;
+    console.log(francesco);
+    console.log(carlo);
+
+    //Crea un nuovo oggetto con locazione di memoria diversa
+    function immutable(oggetto, anni){
+        return Object.assign(
+            {}, // Il nuovo oggetto è vuoto
+            oggetto, 
+            {anni : anni}
+        );
+    }
+
+    let alberto = immutable(francesco, 30);
+    console.log(francesco);
+    console.log(alberto);
+
+
+</script>
+</html>
+

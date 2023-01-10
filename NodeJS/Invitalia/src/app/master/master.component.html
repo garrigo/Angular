@@ -1,0 +1,24 @@
+<div style="background-color: blue;">
+    <h1>Master component</h1>
+    <ul>
+        <li><a [routerLink]="['/magazzino']">Magazzino</a></li>
+        <li>
+            <a [routerLink]="['/fornitori']" [queryParams]="{nome:nomeFornitore, anni:anniFornitore}">Fornitori</a><br>
+            <label for="">Inserisci nome fornitore</label>
+            <input type="text" [(ngModel)]="nomeFornitore">
+            <label for="">Inserisci anni cliente</label>
+            <input type="number" [(ngModel)]="anniFornitore">
+        </li>
+        <li>
+            <a [routerLink]="['/clienti/'+nomeCliente+'/'+anniCliente]">Clienti</a><br>
+            <label for="">Inserisci nome cliente</label>
+            <input type="text" [(ngModel)]="nomeCliente">
+            <label for="">Inserisci anni cliente</label>
+            <input type="number" [(ngModel)]="anniCliente">
+
+        </li>
+
+
+    </ul>
+    <router-outlet></router-outlet>
+</div>
